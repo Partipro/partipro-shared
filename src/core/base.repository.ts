@@ -11,7 +11,7 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
 
   findById(
     id: string | Types.ObjectId,
-    { populate, withDeleted = false }: { populate: PopulateOptions; withDeleted: boolean }
+    { populate, withDeleted = false }: { populate?: PopulateOptions; withDeleted?: boolean },
   ): Promise<I | null> {
     return <Promise<I | null>>this.model
       .findOne(
@@ -19,7 +19,7 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
           _id: id,
           deleted: withDeleted,
         },
-        { populate }
+        { populate },
       )
       .lean()
       .exec();
@@ -36,7 +36,7 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
           populate,
           select,
           sort: sort || { _id: -1 },
-        }
+        },
       )
       .lean()
       .exec();
