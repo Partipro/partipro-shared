@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import UserRepository from "../repositories/user.repository";
 import BadRequestError from "../errors/BadRequestError";
 
@@ -14,7 +15,7 @@ class AuthenticationService extends UserRepository {
   async generateToken(id: string): Promise<string> {
     const foundUser = await this.userRepository.findById(id, {});
     if (!foundUser) {
-      throw new BadRequestError("user_not_found", "User not found.");
+      throw new BadRequestError("user_not_found", "Usuário não encontrado.");
     }
     return jwt.sign(
       {
@@ -26,6 +27,10 @@ class AuthenticationService extends UserRepository {
         expiresIn: "10 days",
       },
     );
+  }
+
+  async comparePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+    return bcrypt.compare(plainPassword, hashedPassword);
   }
 }
 
