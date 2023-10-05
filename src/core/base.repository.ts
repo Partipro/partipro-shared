@@ -9,20 +9,8 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
     return newDocument.toObject();
   }
 
-  findById(
-    id: string | Types.ObjectId,
-    { populate, withDeleted = false }: { populate?: PopulateOptions; withDeleted?: boolean },
-  ): Promise<I | null> {
-    return <Promise<I | null>>this.model
-      .findOne(
-        {
-          _id: id,
-          deleted: withDeleted,
-        },
-        { populate },
-      )
-      .lean()
-      .exec();
+  findById(id: string | Types.ObjectId, { populate }: { populate?: PopulateOptions }): Promise<I | null> {
+    return <Promise<I | null>>this.model.findById(id, null, { populate }).lean().exec();
   }
 
   list({ filters, withDeleted = false, populate, sort, select }: Find<I>): Promise<I[]> {
