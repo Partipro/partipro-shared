@@ -6,4 +6,5 @@ export interface IUser {
   email: string;
   password: string;
   contract: string | IContract;
+  comparePassword: (password: string) => Promise<boolean>;
 }

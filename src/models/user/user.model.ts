@@ -38,14 +38,9 @@ userSchema.pre("save", function (next) {
   });
 });
 
-userSchema.methods.comparePassword = function (password: string, cb: (param1: Error | null, param2?: boolean) => void) {
+userSchema.methods.comparePassword = function (password: string): Promise<boolean> {
   const user = this as IUser;
-  bcrypt.compare(password, user.password, (err, isMatch) => {
-    if (err) {
-      return cb(err);
-    }
-    cb(null, isMatch);
-  });
+  return bcrypt.compare(password, user.password);
 };
 
 const User = model<IUser>("User", userSchema);
