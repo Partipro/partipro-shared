@@ -33,8 +33,8 @@ export interface Repository<I> {
 
   findById(
     id: string | Types.ObjectId,
-    { populate, withDeleted }: { populate: PopulateOptions; withDeleted: boolean },
+    { populate, withDeleted }: { populate: PopulateOptions; withDeleted: boolean }
   ): Promise<I | null>;
 
-  findOne({ filters, withDeleted, populate, sort, select }: Find<I>): Promise<I>;
+  findOne({ filters, withDeleted, populate, sort }: Find<I>): Promise<I>;
 }
