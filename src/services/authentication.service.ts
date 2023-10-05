@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import UserRepository from "../repositories/user.repository";
-import { IUser } from "../models/user/user.interface";
+import BadRequestError from "../errors/BadRequestError";
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
@@ -11,13 +11,15 @@ class AuthenticationService extends UserRepository {
     super();
     this.userRepository = userRepository;
   }
-  async generateToken(user: IUser): Promise<string> {
-    const u = await this.userRepository.findById(user._id, {});
-    console.log(u);
+  async generateToken(id: string): Promise<string> {
+    const foundUser = await this.userRepository.findById(id, {});
+    if (!foundUser) {
+      throw new BadRequestError("user_not_found", "User not found.");
+    }
     return jwt.sign(
       {
-        id: user._id.toString(),
-        email: user.email,
+        id: foundUser._id.toString(),
+        email: foundUser.email,
       },
       SECRET_KEY,
       {
