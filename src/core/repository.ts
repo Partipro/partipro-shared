@@ -35,4 +35,6 @@ export interface Repository<I> {
     id: string | Types.ObjectId,
     { populate, withDeleted }: { populate: PopulateOptions; withDeleted: boolean },
   ): Promise<I | null>;
+
+  findOne({ filters, withDeleted, populate, sort, select }: Find<I>): Promise<I>;
 }
