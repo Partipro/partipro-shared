@@ -4,6 +4,7 @@ module.exports = {
   testEnvironment: "node",
   projects: [
     {
+      setupFiles: ["./__tests__/setupEnvs.ts"],
       setupFilesAfterEnv: ["./__tests__/global.ts"],
     },
   ],
