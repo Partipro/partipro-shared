@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+import UnauthorizedError from "../errors/UnauthorizedError";
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
@@ -8,7 +9,8 @@ export default (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies["ccToken"];
 
     if (!token) {
-      return res.status(403).clearCookie("ccToken").send("Access denied.");
+      res.clearCookie("ccToken");
+      throw new UnauthorizedError("expired_token", "Expired Token");
     }
 
     req.user = jwt.verify(token, SECRET_KEY) as {
@@ -17,6 +19,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
     };
     next();
   } catch (err) {
-    res.status(401).clearCookie("ccToken").send("Invalid token");
+    res.clearCookie("ccToken");
+    throw new UnauthorizedError("invalid_token", "Invalid Token");
   }
 };
