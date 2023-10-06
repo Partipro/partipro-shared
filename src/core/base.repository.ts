@@ -20,6 +20,7 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
           deleted: withDeleted,
           ...filters,
         },
+        null,
         {
           populate,
           select,
