@@ -1,16 +1,18 @@
-import * as mongoDB from "mongodb";
 import { ServerApiVersion } from "mongodb";
+import * as mongoose from "mongoose";
 
 const connection = async () => {
-  const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DATABASE_URI as string, {
-    appName: process.env.DATABASE_NAME,
+  await mongoose.connect(process.env.DATABASE_URI as string, {
+    minPoolSize: 5,
+    maxPoolSize: 10,
+    dbName: process.env.DATABASE_NAME,
+    appName: "Partipro",
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
       deprecationErrors: true,
     },
   });
-  await client.connect();
 };
 
 export default connection;

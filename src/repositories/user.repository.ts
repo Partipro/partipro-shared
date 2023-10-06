@@ -9,4 +9,4 @@ class UserRepository extends BaseRepository<IUser, Model<IUser>> {
   }
 }
 
-export default new UserRepository();
+export default UserRepository;
