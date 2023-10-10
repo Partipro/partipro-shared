@@ -11,5 +11,6 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "exclude": ["__tests__"]
+  "exclude": ["__tests__"],
+  "files": ["./src/types/express/index.d.ts"]
 }
