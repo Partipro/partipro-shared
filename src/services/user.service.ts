@@ -1,3 +1,3 @@
 import UserRepository from "../repositories/user.repository";
 
-export default UserRepository;
+export default class UserService extends UserRepository {}
