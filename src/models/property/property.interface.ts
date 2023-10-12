@@ -5,7 +5,7 @@ export interface IProperty {
   name: string;
   city?: string;
   address?: string;
-  owner?: IUser | string;
+  owner: IUser | string;
   contract?: IContract | string;
   squareMeters?: number;
   monthRent?: number;

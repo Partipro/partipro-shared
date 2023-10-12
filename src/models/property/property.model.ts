@@ -21,6 +21,7 @@ const propertySchema = new Schema<IProperty>({
   owner: {
     ref: "User",
     type: Schema.Types.ObjectId,
+    required: true,
   },
   contract: {
     ref: "Contract",
