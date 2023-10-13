@@ -21,6 +21,7 @@ class AuthenticationService extends UserRepository {
       {
         id: foundUser._id.toString(),
         email: foundUser.email,
+        contract: foundUser.contract,
       },
       SECRET_KEY,
       {
