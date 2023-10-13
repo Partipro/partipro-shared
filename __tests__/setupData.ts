@@ -11,7 +11,7 @@ const data = async () => {
     _id: IDS.USER,
     name: "Jest user",
     email: "user@jest.com",
-    password: "$2b$10$UjTqhopKDcy/ATrRCvJxtOLdyJeN3CUR4Xdw1L0yYVu8f37rk1gIO",
+    password: "123",
   }).save();
 };
 
