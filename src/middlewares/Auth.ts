@@ -16,6 +16,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
     req.user = jwt.verify(token, SECRET_KEY) as {
       email: string;
       id: string;
+      contract: string;
     };
     next();
   } catch (err) {
