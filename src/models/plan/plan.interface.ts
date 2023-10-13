@@ -1,4 +1,5 @@
 export enum PlanHsSku {
+  FREE = "FREE",
   STANDARD = "STANDARD",
 }
 
