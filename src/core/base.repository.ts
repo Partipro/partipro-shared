@@ -13,20 +13,13 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
     return <Promise<I | null>>this.model.findById(id, null, { populate }).lean().exec();
   }
 
-  list({ filters, withDeleted = false, populate, sort, select }: Find<I>): Promise<I[]> {
+  list({ filters, populate, sort, select }: Find<I>): Promise<I[]> {
     return <Promise<I[]>>this.model
-      .find(
-        {
-          deleted: withDeleted,
-          ...filters,
-        },
-        null,
-        {
-          populate,
-          select,
-          sort: sort || { _id: -1 },
-        },
-      )
+      .find({ ...filters }, null, {
+        populate,
+        select,
+        sort: sort || { _id: -1 },
+      })
       .lean()
       .exec();
   }
