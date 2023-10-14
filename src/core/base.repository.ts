@@ -6,7 +6,7 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
 
   async insert(props: I, { session }: { session?: mongoose.mongo.ClientSession } = {}): Promise<I> {
     if (session) {
-      return this.model.create(props, { session }).then((data) => data[0].toObject());
+      return this.model.create([props], { session }).then((data) => data[0].toObject());
     }
     const newDocument = await this.model.create(props);
     return newDocument.toObject();
