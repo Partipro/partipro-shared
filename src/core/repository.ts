@@ -1,4 +1,4 @@
-import { Types, PopulateOptions } from "mongoose";
+import mongoose, { Types, PopulateOptions } from "mongoose";
 
 type FilterValue<T, K extends keyof T> =
   | T[K]
@@ -27,7 +27,7 @@ export type Find<I> = {
 };
 
 export interface Repository<I> {
-  insert(props: I): Promise<I>;
+  insert(props: I, { session }: { session?: mongoose.mongo.ClientSession }): Promise<I>;
 
   list({ filters, withDeleted, populate, sort, select }: Find<I>): Promise<I[]>;
 
