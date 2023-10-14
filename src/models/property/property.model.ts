@@ -19,6 +19,9 @@ const propertySchema = new Schema<IProperty>(
     squareMeters: {
       type: Number,
     },
+    image: {
+      type: String,
+    },
     owner: {
       ref: "User",
       type: Schema.Types.ObjectId,

@@ -9,4 +9,5 @@ export interface IProperty {
   contract?: IContract | string;
   squareMeters?: number;
   monthRent?: number;
+  image?: string;
 }
