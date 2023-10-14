@@ -2,25 +2,28 @@ import { Schema, model } from "mongoose";
 import { IUser } from "./user.interface";
 import bcrypt from "bcrypt";
 
-const userSchema = new Schema<IUser>({
-  name: {
-    type: String,
-    required: true,
+const userSchema = new Schema<IUser>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    contract: {
+      ref: "Contract",
+      type: Schema.Types.ObjectId,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  contract: {
-    ref: "Contract",
-    type: Schema.Types.ObjectId,
-  },
-});
+  { timestamps: true },
+);
 
 userSchema.pre("save", function (next) {
   const user = this as IUser;
