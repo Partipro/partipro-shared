@@ -34,9 +34,10 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
       .exec();
   }
 
-  findOne({ filters, withDeleted, populate, sort }: Find<I> = {}): Promise<I> {
+  findOne({ filters, withDeleted, populate, sort, select }: Find<I> = {}): Promise<I> {
     return <Promise<I>>this.model
       .findOne({ deleted: withDeleted, ...filters }, null, { populate, sort: sort || { _id: -1 } })
+      .select(select || {})
       .lean()
       .exec();
   }

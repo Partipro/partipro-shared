@@ -23,7 +23,7 @@ export type Find<I> = {
   withDeleted?: boolean;
   populate?: PopulateOptions;
   sort?: { [key in keyof I]?: -1 | 1 };
-  select?: (keyof I)[];
+  select?: string | string[] | Record<string, number | boolean | object>;
 };
 
 export interface Repository<I> {
@@ -36,5 +36,5 @@ export interface Repository<I> {
     { populate }: { populate?: PopulateOptions; session?: mongoose.mongo.ClientSession },
   ): Promise<I | null>;
 
-  findOne({ filters, withDeleted, populate, sort }: Find<I>): Promise<I>;
+  findOne({ filters, withDeleted, populate, sort, select }: Find<I>): Promise<I>;
 }
