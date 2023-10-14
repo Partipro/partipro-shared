@@ -12,8 +12,15 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
     return newDocument.toObject();
   }
 
-  findById(id: string | Types.ObjectId, { populate }: { populate?: PopulateOptions } = {}): Promise<I | null> {
-    return <Promise<I | null>>this.model.findById(id, null, { populate }).lean().exec();
+  findById(
+    id: string | Types.ObjectId,
+    { populate, session }: { populate?: PopulateOptions; session?: mongoose.mongo.ClientSession } = {},
+  ): Promise<I | null> {
+    return <Promise<I | null>>this.model
+      .findById(id, null, { populate })
+      .session(session || null)
+      .lean()
+      .exec();
   }
 
   list({ filters, populate, sort, select }: Find<I> = {}): Promise<I[]> {
