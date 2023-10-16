@@ -1,20 +1,24 @@
 import { Schema, model } from "mongoose";
-import { IPlan } from "./plan.interface";
+import { IPlan, PlanHsSku } from "./plan.interface";
 
-const planSchema = new Schema<IPlan>({
-  hs_sku: {
-    type: String,
-    required: true,
+const planSchema = new Schema<IPlan>(
+  {
+    hs_sku: {
+      type: String,
+      enum: PlanHsSku,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
   },
-  name: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-});
+  { timestamps: true },
+);
 
 const Plan = model<IPlan>("Plan", planSchema);
 
