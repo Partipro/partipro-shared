@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IProperty } from "./property.interface";
+import { IProperty, PropertyType } from "./property.interface";
 
 const propertySchema = new Schema<IProperty>(
   {
@@ -8,6 +8,11 @@ const propertySchema = new Schema<IProperty>(
     },
     name: {
       type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: PropertyType,
       required: true,
     },
     address: {
