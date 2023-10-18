@@ -7,6 +7,7 @@ export enum PropertyType {
 }
 
 export interface IProperty {
+  _id: string;
   name: string;
   city?: string;
   address?: string;
