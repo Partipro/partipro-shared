@@ -3,13 +3,15 @@ import { IPropertyContract } from "./propertyContract.interface";
 
 const propertySchema = new Schema<IPropertyContract>(
   {
+    renter: {
+      ref: "Renter",
+      type: Schema.Types.ObjectId,
+    },
+    signedAt: Date,
     active: {
       type: Boolean,
       default: false,
     },
-    occupations: [
-      { from: { type: Date, required: true }, to: Date, renter: { ref: "Renter", type: Schema.Types.ObjectId } },
-    ],
     contract: {
       ref: "Contract",
       type: Schema.Types.ObjectId,
