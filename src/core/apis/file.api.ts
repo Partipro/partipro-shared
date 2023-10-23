@@ -16,11 +16,11 @@ const Bucket = process.env.S3_BUCKET || "";
 
 class FileApi {
   private client = new S3Client({
+    region,
     credentials: {
       accessKeyId,
       secretAccessKey,
     },
-    region,
   });
   constructor() {}
 
@@ -38,8 +38,8 @@ class FileApi {
 
   public async list({ path }: { path: string }) {
     const command = new ListObjectsV2Command({
-      Prefix: path,
       Bucket,
+      Prefix: path,
     });
 
     try {
