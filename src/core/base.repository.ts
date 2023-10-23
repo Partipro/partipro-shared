@@ -1,7 +1,7 @@
 import mongoose, { Model, PopulateOptions, Types } from "mongoose";
-import { Find, Repository } from "./repository";
+import { Find, OptionalType, Repository } from "./repository";
 
-export default abstract class BaseRepository<I, M extends Model<I>> implements Repository<I> {
+export default abstract class BaseRepository<I extends object, M extends Model<I>> implements Repository<I> {
   protected constructor(protected model: M) {}
 
   async insert(props: I, { session }: { session?: mongoose.mongo.ClientSession } = {}): Promise<I> {
@@ -40,5 +40,9 @@ export default abstract class BaseRepository<I, M extends Model<I>> implements R
       .select(select || {})
       .lean()
       .exec();
+  }
+
+  async update(id: string, { props }: { props: OptionalType<I> }): Promise<I> {
+    return <Promise<I>>this.model.updateOne({ _id: id }, props).lean();
   }
 }
