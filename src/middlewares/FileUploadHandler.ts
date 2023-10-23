@@ -16,7 +16,7 @@ export default (fields: { name: string; type: "image" }[]) =>
         callback(null, true);
       } else {
         const allowedMimetypes = {
-          image: ["image/jpeg", "image/png"],
+          image: ["image/jpeg", "image/png", "image/webp"],
         }[field.type];
 
         const isValidType = (allowedMimetypes || []).some((type) => type === file.mimetype);
