@@ -45,4 +45,10 @@ export default abstract class BaseRepository<I extends object, M extends Model<I
   async update(id: string, { props }: { props: OptionalType<I> }): Promise<I> {
     return <Promise<I>>this.model.updateOne({ _id: id }, props).lean();
   }
+
+  async delete(id: string): Promise<I> {
+    const document = <Promise<I>>this.model.findById(id).lean().exec();
+    await this.model.deleteOne({ _id: id }).exec();
+    return document;
+  }
 }
