@@ -43,4 +43,6 @@ export interface Repository<I> {
   findOne({ filters, withDeleted, populate, sort, select }: Find<I>): Promise<I>;
 
   update(id: string, { props }: { props: OptionalType<I> }): Promise<I>;
+
+  delete(id: string): Promise<I>;
 }

@@ -7,6 +7,10 @@ const renterSchema = new Schema<IRenter>(
       type: String,
       required: true,
     },
+    contract: {
+      ref: "Contract",
+      type: Schema.Types.ObjectId,
+    },
     business: String,
   },
   { timestamps: true },
