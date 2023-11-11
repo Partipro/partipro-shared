@@ -26,6 +26,10 @@ export type Find<I> = {
   select?: string | string[] | Record<string, number | boolean | object>;
 };
 
+export type OptionalType<T> = {
+  [K in keyof T]?: T[K];
+};
+
 export interface Repository<I> {
   insert(props: I, { session }: { session?: mongoose.mongo.ClientSession }): Promise<I>;
 
@@ -37,4 +41,8 @@ export interface Repository<I> {
   ): Promise<I | null>;
 
   findOne({ filters, withDeleted, populate, sort, select }: Find<I>): Promise<I>;
+
+  update(id: string, { props }: { props: OptionalType<I> }): Promise<I>;
+
+  delete(id: string): Promise<I>;
 }
