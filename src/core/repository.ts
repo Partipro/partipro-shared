@@ -1,4 +1,4 @@
-import mongoose, { Types, PopulateOptions } from "mongoose";
+import mongoose, { AggregateOptions, Types, PopulateOptions, PipelineStage } from "mongoose";
 
 type FilterValue<T, K extends keyof T> =
   | T[K]
@@ -30,6 +30,8 @@ export type OptionalType<T> = {
   [K in keyof T]?: T[K];
 };
 
+export type Result<P> = P & { _id: Types.ObjectId };
+
 export interface Repository<I> {
   insert(props: I, { session }: { session?: mongoose.mongo.ClientSession }): Promise<I>;
 
@@ -45,4 +47,6 @@ export interface Repository<I> {
   update(id: string, { props }: { props: OptionalType<I> }): Promise<I>;
 
   delete(id: string): Promise<I>;
+
+  aggregate<T = Result<I>>(pipeline: PipelineStage[], options?: AggregateOptions): Promise<T[]>;
 }

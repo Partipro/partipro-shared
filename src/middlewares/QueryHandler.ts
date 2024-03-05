@@ -4,7 +4,7 @@ import BadRequestError from "../errors/BadRequestError";
 import ServerError from "../errors/ServerError";
 
 export default function QueryHandler(schema: AnySchema) {
-  return async (req: Rq, res: Rs, next: NextFunction) => {
+  return async (req: Rq, _res: Rs, next: NextFunction) => {
     try {
       const options = {
         abortEarly: false,

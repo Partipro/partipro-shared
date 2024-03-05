@@ -1,7 +1,6 @@
 import {
   S3Client,
   GetObjectCommand,
-  GetBucketAclCommand,
   PutObjectCommand,
   DeleteObjectCommand,
   ListObjectsV2Command,
@@ -23,18 +22,6 @@ class FileApi {
     },
   });
   constructor() {}
-
-  private async bucketACL() {
-    const command = new GetBucketAclCommand({
-      Bucket,
-    });
-
-    try {
-      return await this.client.send(command);
-    } catch (err) {
-      throw new ServerError("s3_application_error", "Error getting s3 ACL");
-    }
-  }
 
   public async list({ path }: { path: string }) {
     const command = new ListObjectsV2Command({

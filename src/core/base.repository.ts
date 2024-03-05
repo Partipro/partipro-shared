@@ -1,8 +1,8 @@
-import mongoose, { Model, PopulateOptions, Types } from "mongoose";
-import { Find, OptionalType, Repository } from "./repository";
+import mongoose, { AggregateOptions, Model, PipelineStage, PopulateOptions, Types } from "mongoose";
+import { Find, OptionalType, Repository, Result } from "./repository";
 
-export default abstract class BaseRepository<I extends object, M extends Model<I>> implements Repository<I> {
-  protected constructor(protected model: M) {}
+export default abstract class BaseRepository<I> implements Repository<I> {
+  protected constructor(protected model: Model<I>) {}
 
   async insert(props: I, { session }: { session?: mongoose.mongo.ClientSession } = {}): Promise<I> {
     if (session) {
@@ -43,12 +43,17 @@ export default abstract class BaseRepository<I extends object, M extends Model<I
   }
 
   async update(id: string, { props }: { props: OptionalType<I> }): Promise<I> {
-    return <Promise<I>>this.model.updateOne({ _id: id }, props).lean();
+    await this.model.updateOne({ _id: id }, props).lean();
+    return <Promise<I>>this.model.findById({ _id: id }).lean().exec();
   }
 
   async delete(id: string): Promise<I> {
     const document = <Promise<I>>this.model.findById(id).lean().exec();
     await this.model.deleteOne({ _id: id }).exec();
     return document;
+  }
+
+  aggregate<T = Result<I>>(pipeline: PipelineStage[], options?: AggregateOptions): Promise<T[]> {
+    return <Promise<T[]>>this.model.aggregate(pipeline, options).exec();
   }
 }

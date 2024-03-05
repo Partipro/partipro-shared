@@ -1,12 +1,11 @@
-import { Model } from "mongoose";
 import BaseRepository from "../core/base.repository";
 import { IProperty } from "../models/property/property.interface";
 import Property from "../models/property/property.model";
 
-class PropertyRepository extends BaseRepository<IProperty, Model<IProperty>> {
+class PropertyRepository extends BaseRepository<IProperty> {
   constructor() {
     super(Property);
   }
 }
 
-export default PropertyRepository;
+export default new PropertyRepository();
