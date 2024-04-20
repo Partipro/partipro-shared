@@ -8,6 +8,7 @@ const propertySchema = new Schema<IPropertyContract>(
       type: Schema.Types.ObjectId,
     },
     signedAt: Date,
+    expiresAt: Date,
     status: {
       type: String,
       required: true,
