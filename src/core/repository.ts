@@ -63,6 +63,7 @@ export interface Repository<I> {
   aggregate<T = Result<I>>(pipeline: PipelineStage[], options?: AggregateOptions): Promise<T[]>;
 
   paginate({
+    withDeleted,
     filters,
     populate,
     sort,

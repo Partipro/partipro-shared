@@ -37,8 +37,8 @@ export default abstract class BaseService<I> implements Service<I> {
   }
 
   async paginate(
-    { filters, populate, sort, select, page, pageSize = 15 }: FindPaginate<I> = { page: 1 },
+    { filters, populate, withDeleted, sort, select, page, pageSize = 15 }: FindPaginate<I> = { page: 1 },
   ): Promise<{ data: I[]; total: number }> {
-    return this.repository.paginate({ filters, populate, sort, select, page, pageSize });
+    return this.repository.paginate({ filters, populate, sort, select, withDeleted, page, pageSize });
   }
 }

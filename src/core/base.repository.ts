@@ -35,9 +35,9 @@ export default abstract class BaseRepository<I> implements Repository<I> {
       .exec();
   }
 
-  findOne({ filters, withDeleted, populate, sort, select }: Find<I> = {}): Promise<I> {
+  findOne({ filters, populate, sort, select }: Find<I> = {}): Promise<I> {
     return <Promise<I>>this.model
-      .findOne({ deleted: withDeleted, ...filters }, null, { populate, sort: sort || { _id: -1 } })
+      .findOne({ ...filters }, null, { populate, sort: sort || { _id: -1 } })
       .select(select || {})
       .lean()
       .exec();
@@ -65,13 +65,14 @@ export default abstract class BaseRepository<I> implements Repository<I> {
   }
 
   async paginate(
-    { filters, populate, sort, select, page, pageSize = 15 }: FindPaginate<I> = { page: 1 },
+    { filters, populate, withDeleted, sort, select, page, pageSize = 15 }: FindPaginate<I> = { page: 1 },
   ): Promise<{ data: I[]; total: number }> {
     const docs = await this.model
       .aggregate([
         {
           $match: {
             ...filters,
+            ...(withDeleted ? {} : { deleted: false }),
           },
         },
         {
@@ -92,6 +93,17 @@ export default abstract class BaseRepository<I> implements Repository<I> {
               },
             ]
           : []),
+        {
+          $unwind: "$total",
+        },
+        {
+          $replaceRoot: {
+            newRoot: {
+              data: "$data",
+              total: "$total.total",
+            },
+          },
+        },
       ])
       .exec();
 

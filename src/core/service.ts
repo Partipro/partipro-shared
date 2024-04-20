@@ -21,6 +21,7 @@ export interface Service<I> {
 
   paginate({
     filters,
+    withDeleted,
     populate,
     sort,
     select,
