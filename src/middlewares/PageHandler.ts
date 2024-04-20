@@ -2,14 +2,14 @@ import { Request as Rq, Response as Rs, NextFunction } from "express";
 import Joi, { AnySchema } from "joi";
 import BadRequestError from "../errors/BadRequestError";
 import ServerError from "../errors/ServerError";
-import { omit, pick } from "lodash";
+import { omit } from "lodash";
 
 export default function QueryHandler(schema: AnySchema) {
   return async (req: Rq, _res: Rs, next: NextFunction) => {
     try {
       req.pagination = {
-        page: (req.query?.page as unknown as number) || 1,
-        pageSize: (req.query?.pageSize as unknown as number) || 15,
+        page: parseInt(req.query?.page as string) || 1,
+        pageSize: parseInt(req.query?.pageSize as string) || 15,
       };
       const options = {
         abortEarly: false,
