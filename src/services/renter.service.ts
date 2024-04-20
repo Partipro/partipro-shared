@@ -1,8 +1,8 @@
 import BaseService from "../core/base.service";
-import { IRenter } from "../models/renter/renter.interface";
 import RenterRepository from "../repositories/renter.repository";
+import { IUser } from "../models/user/user.interface";
 
-export class RenterService extends BaseService<IRenter> {
+export class RenterService extends BaseService<IUser> {
   constructor() {
     super(RenterRepository);
   }

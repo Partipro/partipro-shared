@@ -4,7 +4,7 @@ import { IPropertyContract } from "./propertyContract.interface";
 const propertySchema = new Schema<IPropertyContract>(
   {
     renter: {
-      ref: "Renter",
+      ref: "User",
       type: Schema.Types.ObjectId,
     },
     signedAt: Date,

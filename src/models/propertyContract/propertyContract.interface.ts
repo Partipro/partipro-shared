@@ -1,6 +1,6 @@
 import { IContract } from "../contract/contract.interface";
-import { IRenter } from "../renter/renter.interface";
 import { IProperty } from "../property/property.interface";
+import { IUser } from "../user/user.interface";
 
 export enum PropertyContractStatus {
   ACTIVE = "ACTIVE",
@@ -11,7 +11,7 @@ export enum PropertyContractStatus {
 export interface IPropertyContract {
   _id: string;
   property: IProperty | string;
-  renter: IRenter | string;
+  renter: IUser | string;
   document?: string;
   signedAt?: string;
   status: PropertyContractStatus;

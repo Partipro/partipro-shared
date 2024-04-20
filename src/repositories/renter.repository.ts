@@ -1,10 +1,10 @@
 import BaseRepository from "../core/base.repository";
-import { IRenter } from "../models/renter/renter.interface";
-import Renter from "../models/renter/renter.model";
+import User from "../models/user/user.model";
+import { IUser } from "../models/user/user.interface";
 
-class RenterRepository extends BaseRepository<IRenter> {
+class RenterRepository extends BaseRepository<IUser> {
   constructor() {
-    super(Renter);
+    super(User);
   }
 }
 
