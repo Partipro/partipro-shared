@@ -26,6 +26,16 @@ export type Find<I> = {
   select?: string | string[] | Record<string, number | boolean | object>;
 };
 
+export type FindPaginate<I> = {
+  filters?: Filter<I>;
+  withDeleted?: boolean;
+  populate?: PopulateOptions;
+  page: number;
+  pageSize?: number;
+  sort?: { [key in keyof I]: -1 | 1 };
+  select?: string | string[] | Record<string, number | boolean | object>;
+};
+
 export type OptionalType<T> = {
   [K in keyof T]?: T[K];
 };
@@ -49,4 +59,13 @@ export interface Repository<I> {
   delete(id: string): Promise<I>;
 
   aggregate<T = Result<I>>(pipeline: PipelineStage[], options?: AggregateOptions): Promise<T[]>;
+
+  paginate({
+    filters,
+    populate,
+    sort,
+    select,
+    page,
+    pageSize = 15,
+  }: FindPaginate<I>): Promise<{ data: I[]; total: number }>;
 }

@@ -1,5 +1,5 @@
 import mongoose, { PopulateOptions, Types } from "mongoose";
-import { Find, OptionalType, Repository } from "./repository";
+import { Find, FindPaginate, OptionalType, Repository } from "./repository";
 import { Service } from "./service";
 
 export default abstract class BaseService<I> implements Service<I> {
@@ -30,5 +30,11 @@ export default abstract class BaseService<I> implements Service<I> {
 
   async delete(id: string): Promise<I> {
     return this.repository.delete(id);
+  }
+
+  async paginate(
+    { filters, populate, sort, select, page, pageSize = 15 }: FindPaginate<I> = { page: 1 },
+  ): Promise<{ data: I[]; total: number }> {
+    return this.repository.paginate({ filters, populate, sort, select, page, pageSize });
   }
 }

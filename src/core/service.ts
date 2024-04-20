@@ -1,5 +1,5 @@
 import mongoose, { Types, PopulateOptions } from "mongoose";
-import { Find, OptionalType } from "./repository";
+import { Find, FindPaginate, OptionalType } from "./repository";
 
 export interface Service<I> {
   insert(props: I, { session }: { session?: mongoose.mongo.ClientSession }): Promise<I>;
@@ -16,4 +16,13 @@ export interface Service<I> {
   update(id: string, { props }: { props: OptionalType<I> }): Promise<I>;
 
   delete(id: string): Promise<I>;
+
+  paginate({
+    filters,
+    populate,
+    sort,
+    select,
+    page,
+    pageSize = 15,
+  }: FindPaginate<I>): Promise<{ data: I[]; total: number }>;
 }

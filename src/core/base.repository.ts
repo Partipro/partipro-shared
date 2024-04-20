@@ -1,5 +1,6 @@
 import mongoose, { AggregateOptions, Model, PipelineStage, PopulateOptions, Types } from "mongoose";
-import { Find, OptionalType, Repository, Result } from "./repository";
+import { Find, FindPaginate, OptionalType, Repository, Result } from "./repository";
+import { head } from "lodash";
 
 export default abstract class BaseRepository<I> implements Repository<I> {
   protected constructor(protected model: Model<I>) {}
@@ -55,5 +56,42 @@ export default abstract class BaseRepository<I> implements Repository<I> {
 
   aggregate<T = Result<I>>(pipeline: PipelineStage[], options?: AggregateOptions): Promise<T[]> {
     return <Promise<T[]>>this.model.aggregate(pipeline, options).exec();
+  }
+
+  async paginate(
+    { filters, populate, sort, select, page, pageSize = 15 }: FindPaginate<I> = { page: 1 },
+  ): Promise<{ data: I[]; total: number }> {
+    const docs = await this.model
+      .aggregate([
+        {
+          $match: {
+            ...filters,
+          },
+        },
+        {
+          $facet: {
+            total: [{ $count: "total" }],
+            data: [{ $skip: (page - 1) * pageSize }, { $limit: pageSize }],
+          },
+        },
+        {
+          $sort: sort || { _id: -1 },
+        },
+        ...(select
+          ? [
+              {
+                $project: {
+                  select,
+                },
+              },
+            ]
+          : []),
+      ])
+      .exec();
+
+    if (populate && head(docs)?.data?.length) {
+      await this.model.populate(head(docs).data, populate);
+    }
+    return <Promise<{ data: I[]; total: number }>>head(docs);
   }
 }
