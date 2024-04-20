@@ -17,7 +17,7 @@ export default abstract class BaseService<I> implements Service<I> {
   }
 
   list({ filters, populate, sort, withDeleted, select }: Find<I> = {}): Promise<I[]> {
-    return <Promise<I[]>>this.repository.list({ filters, populate, sort, select });
+    return <Promise<I[]>>this.repository.list({ filters, populate, withDeleted, sort, select });
   }
 
   findOne({ filters, withDeleted, populate, sort, select }: Find<I> = {}): Promise<I> {
