@@ -8,9 +8,9 @@ const propertySchema = new Schema<IPropertyContract>(
       type: Schema.Types.ObjectId,
     },
     signedAt: Date,
-    active: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      required: true,
     },
     contract: {
       ref: "Contract",
