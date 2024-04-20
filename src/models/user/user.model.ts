@@ -23,6 +23,7 @@ const userSchema = new Schema<IUser>(
       required: true,
       enum: [Roles.ADMIN, Roles.RENTER],
     },
+    business: String,
     contract: {
       ref: "Contract",
       type: Schema.Types.ObjectId,

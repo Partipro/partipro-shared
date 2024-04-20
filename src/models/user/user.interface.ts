@@ -13,4 +13,5 @@ export interface IUser {
   contract: string | IContract;
   role: Roles;
   comparePassword: (password: string) => Promise<boolean>;
+  business?: string;
 }
