@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IUser } from "./user.interface";
+import { IUser, Roles } from "./user.interface";
 import bcrypt from "bcrypt";
 
 const userSchema = new Schema<IUser>(
@@ -17,6 +17,11 @@ const userSchema = new Schema<IUser>(
       type: String,
       select: false,
       required: true,
+    },
+    role: {
+      type: String,
+      required: true,
+      enum: [Roles.ADMIN, Roles.RENTER],
     },
     contract: {
       ref: "Contract",
