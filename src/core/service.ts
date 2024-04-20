@@ -15,7 +15,9 @@ export interface Service<I> {
 
   update(id: string, { props }: { props: OptionalType<I> }): Promise<I>;
 
-  delete(id: string): Promise<I>;
+  disable(id: string): Promise<I>;
+
+  restore(id: string): Promise<I>;
 
   paginate({
     filters,

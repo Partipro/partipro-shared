@@ -24,9 +24,9 @@ export default abstract class BaseRepository<I> implements Repository<I> {
       .exec();
   }
 
-  list({ filters, populate, sort, select }: Find<I> = {}): Promise<I[]> {
+  list({ filters, populate, sort, select, withDeleted }: Find<I> = {}): Promise<I[]> {
     return <Promise<I[]>>this.model
-      .find({ ...filters }, null, {
+      .find({ ...filters, ...(withDeleted ? {} : { deleted: false }) }, null, {
         populate,
         select,
         sort: sort || { _id: -1 },
@@ -48,9 +48,15 @@ export default abstract class BaseRepository<I> implements Repository<I> {
     return <Promise<I>>this.model.findById({ _id: id }).lean().exec();
   }
 
-  async delete(id: string): Promise<I> {
+  async disable(id: string): Promise<I> {
     const document = <Promise<I>>this.model.findById(id).lean().exec();
-    await this.model.deleteOne({ _id: id }).exec();
+    await this.model.updateOne({ _id: id }, { $set: { deleted: true, deletedAt: new Date() } }).exec();
+    return document;
+  }
+
+  async restore(id: string): Promise<I> {
+    const document = <Promise<I>>this.model.findById(id).lean().exec();
+    await this.model.updateOne({ _id: id }, { $set: { deleted: false, deletedAt: null } }).exec();
     return document;
   }
 

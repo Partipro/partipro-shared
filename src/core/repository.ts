@@ -56,7 +56,9 @@ export interface Repository<I> {
 
   update(id: string, { props }: { props: OptionalType<I> }): Promise<I>;
 
-  delete(id: string): Promise<I>;
+  disable(id: string): Promise<I>;
+
+  restore(id: string): Promise<I>;
 
   aggregate<T = Result<I>>(pipeline: PipelineStage[], options?: AggregateOptions): Promise<T[]>;
 

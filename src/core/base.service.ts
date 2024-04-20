@@ -16,7 +16,7 @@ export default abstract class BaseService<I> implements Service<I> {
     return <Promise<I | null>>this.repository.findById(id, { populate, session });
   }
 
-  list({ filters, populate, sort, select }: Find<I> = {}): Promise<I[]> {
+  list({ filters, populate, sort, withDeleted, select }: Find<I> = {}): Promise<I[]> {
     return <Promise<I[]>>this.repository.list({ filters, populate, sort, select });
   }
 
@@ -28,8 +28,12 @@ export default abstract class BaseService<I> implements Service<I> {
     return <Promise<I>>this.repository.update(id, { props });
   }
 
-  async delete(id: string): Promise<I> {
-    return this.repository.delete(id);
+  async disable(id: string): Promise<I> {
+    return this.repository.disable(id);
+  }
+
+  async restore(id: string): Promise<I> {
+    return this.repository.restore(id);
   }
 
   async paginate(
