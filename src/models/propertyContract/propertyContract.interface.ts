@@ -1,6 +1,7 @@
 import { IContract } from "../contract/contract.interface";
 import { IProperty } from "../property/property.interface";
 import { IUser } from "../user/user.interface";
+import BaseInterface from "../BaseInterface";
 
 export enum PropertyContractStatus {
   ACTIVE = "ACTIVE",
@@ -8,7 +9,7 @@ export enum PropertyContractStatus {
   EXPIRED = "EXPIRED",
 }
 
-export interface IPropertyContract {
+export interface IPropertyContract extends BaseInterface {
   _id: string;
   property: IProperty | string;
   expiresAt: string;

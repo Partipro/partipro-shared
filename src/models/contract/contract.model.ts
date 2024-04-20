@@ -9,6 +9,10 @@ const contractSchema = new Schema<IContract>(
     },
     socialReason: String,
     documentNumber: String,
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

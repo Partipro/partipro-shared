@@ -25,6 +25,10 @@ const propertySchema = new Schema<IPropertyContract>(
       ref: "Contract",
       type: Schema.Types.ObjectId,
     },
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

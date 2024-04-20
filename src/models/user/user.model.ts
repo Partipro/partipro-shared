@@ -28,6 +28,10 @@ const userSchema = new Schema<IUser>(
       ref: "Contract",
       type: Schema.Types.ObjectId,
     },
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
