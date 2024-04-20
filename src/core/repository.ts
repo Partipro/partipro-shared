@@ -21,7 +21,7 @@ export type Filter<T> = {
 export type Find<I> = {
   filters?: Filter<I>;
   withDeleted?: boolean;
-  populate?: PopulateOptions;
+  populate?: PopulateOptions | Array<PopulateOptions> | string;
   sort?: { [key in keyof I]?: -1 | 1 };
   select?: string | string[] | Record<string, number | boolean | object>;
 };
@@ -29,7 +29,7 @@ export type Find<I> = {
 export type FindPaginate<I> = {
   filters?: Filter<I>;
   withDeleted?: boolean;
-  populate?: PopulateOptions;
+  populate?: PopulateOptions | Array<PopulateOptions> | string;
   page: number;
   pageSize?: number;
   sort?: { [key in keyof I]: -1 | 1 };
