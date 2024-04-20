@@ -22,6 +22,7 @@ export class AuthenticationService extends BaseService<IUser> {
         id: foundUser._id.toString(),
         email: foundUser.email,
         contract: foundUser.contract,
+        role: foundUser.role,
       },
       SECRET_KEY,
       {
