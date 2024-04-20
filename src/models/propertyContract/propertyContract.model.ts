@@ -17,6 +17,9 @@ const propertySchema = new Schema<IPropertyContract>(
       type: Schema.Types.ObjectId,
       required: true,
     },
+    document: {
+      type: String,
+    },
     contract: {
       ref: "Contract",
       type: Schema.Types.ObjectId,

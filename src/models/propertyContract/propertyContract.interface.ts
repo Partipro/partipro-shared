@@ -11,7 +11,8 @@ export enum PropertyContractStatus {
 export interface IPropertyContract {
   _id: string;
   property: IProperty | string;
-  renter?: IRenter | string;
+  renter: IRenter | string;
+  document?: string;
   signedAt?: string;
   status: PropertyContractStatus;
   contract: IContract | string;
