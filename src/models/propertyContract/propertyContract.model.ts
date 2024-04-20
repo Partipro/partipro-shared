@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IPropertyContract } from "./propertyContract.interface";
+import { IPropertyContract, PropertyContractStatus } from "./propertyContract.interface";
 
 const propertySchema = new Schema<IPropertyContract>(
   {
@@ -11,6 +11,12 @@ const propertySchema = new Schema<IPropertyContract>(
     expiresAt: Date,
     status: {
       type: String,
+      enum: [
+        PropertyContractStatus.AWAITING_SIGN,
+        PropertyContractStatus.ACTIVE,
+        PropertyContractStatus.EXPIRED,
+        PropertyContractStatus.CANCELED,
+      ],
       required: true,
     },
     property: {
@@ -29,6 +35,7 @@ const propertySchema = new Schema<IPropertyContract>(
       type: Boolean,
       default: false,
     },
+    canceledAt: Date,
   },
   { timestamps: true },
 );

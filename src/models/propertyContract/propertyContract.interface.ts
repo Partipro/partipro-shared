@@ -7,6 +7,7 @@ export enum PropertyContractStatus {
   ACTIVE = "ACTIVE",
   AWAITING_SIGN = "AWAITING_SIGN",
   EXPIRED = "EXPIRED",
+  CANCELED = "CANCELED",
 }
 
 export interface IPropertyContract extends BaseInterface {
@@ -18,4 +19,5 @@ export interface IPropertyContract extends BaseInterface {
   signedAt?: string;
   status: PropertyContractStatus;
   contract: IContract | string;
+  canceledAt?: string;
 }
