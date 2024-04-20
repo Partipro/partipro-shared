@@ -32,6 +32,9 @@ const userSchema = new Schema<IUser>(
       type: Boolean,
       default: false,
     },
+    phone: String,
+    address: String,
+    documentNumber: String,
   },
   { timestamps: true },
 );

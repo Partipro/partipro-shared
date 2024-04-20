@@ -15,4 +15,7 @@ export interface IUser extends BaseInterface {
   role: Roles;
   comparePassword: (password: string) => Promise<boolean>;
   business?: string;
+  phone?: string;
+  address?: string;
+  documentNumber?: string;
 }
