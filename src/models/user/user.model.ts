@@ -35,6 +35,7 @@ const userSchema = new Schema<IUser>(
     phone: String,
     address: String,
     documentNumber: String,
+    clicksignSignerId: String,
   },
   { timestamps: true },
 );

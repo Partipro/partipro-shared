@@ -19,6 +19,7 @@ const propertySchema = new Schema<IPropertyContract>(
       ],
       required: true,
     },
+    clicksignEnvelopeId: String,
     property: {
       ref: "Property",
       type: Schema.Types.ObjectId,

@@ -20,4 +20,5 @@ export interface IPropertyContract extends BaseInterface {
   status: PropertyContractStatus;
   contract: IContract | string;
   canceledAt?: string;
+  clicksignEnvelopeId?: string;
 }

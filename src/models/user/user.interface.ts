@@ -18,4 +18,5 @@ export interface IUser extends BaseInterface {
   phone?: string;
   address?: string;
   documentNumber?: string;
+  clicksignSignerId?: string;
 }
