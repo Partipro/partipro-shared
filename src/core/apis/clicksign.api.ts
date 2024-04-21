@@ -1,11 +1,5 @@
 import axios, { Method } from "axios";
 
-export type SignerData = {
-  email: string;
-  name: string;
-  phone: string;
-};
-
 async function buildRequest<D>({
   method,
   url,
@@ -132,7 +126,7 @@ async function addRequirements({
 class ClicksignEnvelopeApi {
   constructor() {}
 
-  async createEnvelope({ name, fileBuffer, signerEmail }: { name: string; fileBuffer: Buffer; signerEmail: string }) {
+  async create({ name, fileBuffer, signerEmail }: { name: string; fileBuffer: Buffer; signerEmail: string }) {
     const envelopeResponse = await buildRequest({
       method: "post",
       url: "api/v3/envelopes",
@@ -154,20 +148,16 @@ class ClicksignEnvelopeApi {
 
     return { envelopeId: envelopeResponse?.data.id, signerId: signerResponse?.data.id };
   }
-}
 
-class ClicksingNotificationApi {
-  constructor() {}
-
-  async createNotification({ envelopeId, signerId }: { envelopeId: string; signerId: string }) {
+  async send({ envelopeId }: { envelopeId: string }) {
     return buildRequest({
-      method: "POST",
-      url: `api/v3/envelopes/${envelopeId}/signers/${signerId}/notifications`,
+      method: "PATCH",
+      url: `api/v3/envelopes/${envelopeId}`,
       data: {
-        type: "notifications",
+        type: "envelopes",
+        id: envelopeId,
         attributes: {
-          message:
-            "Olá, este é o contrato de locator para locatário que você precisa assinar. Clique no link abaixo para assinar. Obrigado!",
+          status: "running",
         },
       },
     });
@@ -175,6 +165,5 @@ class ClicksingNotificationApi {
 }
 
 const clicksignEnvelopApi = new ClicksignEnvelopeApi();
-const clicksignNotificationApi = new ClicksingNotificationApi();
 
-export { clicksignEnvelopApi, clicksignNotificationApi };
+export { clicksignEnvelopApi };
