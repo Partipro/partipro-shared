@@ -150,7 +150,17 @@ class ClicksignEnvelopeApi {
   }
 
   async send({ envelopeId }: { envelopeId: string }) {
-    return buildRequest({
+    await buildRequest({
+      method: "POST",
+      url: `api/v3/envelopes/${envelopeId}/notifications`,
+      data: {
+        type: "notifications",
+        attributes: {
+          message: "Contrato disponível para assinatura. Acesse o link para assinar o contrato. Obrigado!",
+        },
+      },
+    });
+    await buildRequest({
       method: "PATCH",
       url: `api/v3/envelopes/${envelopeId}`,
       data: {
