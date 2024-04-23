@@ -151,16 +151,6 @@ class ClicksignEnvelopeApi {
 
   async send({ envelopeId }: { envelopeId: string }) {
     await buildRequest({
-      method: "POST",
-      url: `api/v3/envelopes/${envelopeId}/notifications`,
-      data: {
-        type: "notifications",
-        attributes: {
-          message: "Contrato disponível para assinatura. Acesse o link para assinar o contrato. Obrigado!",
-        },
-      },
-    });
-    await buildRequest({
       method: "PATCH",
       url: `api/v3/envelopes/${envelopeId}`,
       data: {
@@ -168,6 +158,16 @@ class ClicksignEnvelopeApi {
         id: envelopeId,
         attributes: {
           status: "running",
+        },
+      },
+    });
+    await buildRequest({
+      method: "POST",
+      url: `api/v3/envelopes/${envelopeId}/notifications`,
+      data: {
+        type: "notifications",
+        attributes: {
+          message: "Contrato disponível para assinatura. Acesse o link para assinar o contrato. Obrigado!",
         },
       },
     });
