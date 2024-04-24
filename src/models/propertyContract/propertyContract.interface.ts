@@ -8,6 +8,7 @@ export enum PropertyContractStatus {
   AWAITING_SIGN = "AWAITING_SIGN",
   EXPIRED = "EXPIRED",
   CANCELED = "CANCELED",
+  DRAFT = "DRAFT",
 }
 
 export interface IPropertyContract extends BaseInterface {

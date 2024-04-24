@@ -16,6 +16,7 @@ const propertySchema = new Schema<IPropertyContract>(
         PropertyContractStatus.ACTIVE,
         PropertyContractStatus.EXPIRED,
         PropertyContractStatus.CANCELED,
+        PropertyContractStatus.DRAFT,
       ],
       required: true,
     },
