@@ -1,7 +1,7 @@
 import multer from "multer";
 import floor from "lodash/floor";
 
-export default (fields: { name: string; type: "image" }[]) =>
+export default (fields: { name: string; type: "image" | "pdf" }[]) =>
   multer({
     fileFilter: (request, file, callback) => {
       const fileSize = parseInt(request.headers["content-length"] ?? "");
@@ -17,6 +17,7 @@ export default (fields: { name: string; type: "image" }[]) =>
       } else {
         const allowedMimetypes = {
           image: ["image/jpeg", "image/png", "image/webp"],
+          pdf: ["application/pdf"],
         }[field.type];
 
         const isValidType = (allowedMimetypes || []).some((type) => type === file.mimetype);

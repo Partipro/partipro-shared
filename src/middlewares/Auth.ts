@@ -17,6 +17,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
       email: string;
       id: string;
       contract: string;
+      role: string;
     };
     next();
   } catch (err) {

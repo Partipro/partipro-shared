@@ -1,20 +1,19 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import UserRepository from "../repositories/user.repository";
 import BadRequestError from "../errors/BadRequestError";
 import mongoose from "mongoose";
+import BaseService from "../core/base.service";
+import { IUser } from "../models/user/user.interface";
+import UserRepository from "../repositories/user.repository";
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
-class AuthenticationService extends UserRepository {
-  private userRepository: UserRepository;
-
-  constructor(userRepository: UserRepository) {
-    super();
-    this.userRepository = userRepository;
+export class AuthenticationService extends BaseService<IUser> {
+  constructor() {
+    super(UserRepository);
   }
   async generateToken(id: string, { session }: { session?: mongoose.mongo.ClientSession } = {}): Promise<string> {
-    const foundUser = await this.userRepository.findById(id, { session });
+    const foundUser = await super.findById(id, { session });
     if (!foundUser) {
       throw new BadRequestError("user_not_found", "Usuário não encontrado.");
     }
@@ -23,6 +22,7 @@ class AuthenticationService extends UserRepository {
         id: foundUser._id.toString(),
         email: foundUser.email,
         contract: foundUser.contract,
+        role: foundUser.role,
       },
       SECRET_KEY,
       {
@@ -36,4 +36,4 @@ class AuthenticationService extends UserRepository {
   }
 }
 
-export default AuthenticationService;
+export default new AuthenticationService();

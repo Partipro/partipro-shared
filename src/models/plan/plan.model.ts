@@ -16,6 +16,10 @@ const planSchema = new Schema<IPlan>(
       type: Number,
       required: true,
     },
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

@@ -2,10 +2,15 @@ import { Request as Rq, Response as Rs, NextFunction } from "express";
 import Joi, { AnySchema } from "joi";
 import BadRequestError from "../errors/BadRequestError";
 import ServerError from "../errors/ServerError";
+import { omit } from "lodash";
 
 export default function QueryHandler(schema: AnySchema) {
   return async (req: Rq, _res: Rs, next: NextFunction) => {
     try {
+      req.pagination = {
+        page: parseInt(req.query?.page as string) || 1,
+        pageSize: parseInt(req.query?.pageSize as string) || 15,
+      };
       const options = {
         abortEarly: false,
         allowUnknown: true,
@@ -33,7 +38,7 @@ export default function QueryHandler(schema: AnySchema) {
         if (result.error) {
           throw new BadRequestError("invalid_query_params", "Parametros de busca inválidos.");
         }
-        req.filters = result.value;
+        req.filters = omit(result.value, "page", "pageSize");
       }
 
       const populateResult = await populateSchema.validate(req.query, options);

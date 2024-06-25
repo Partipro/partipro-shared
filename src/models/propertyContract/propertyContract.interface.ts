@@ -1,10 +1,25 @@
 import { IContract } from "../contract/contract.interface";
-import { IRenter } from "../renter/renter.interface";
+import { IProperty } from "../property/property.interface";
+import { IUser } from "../user/user.interface";
+import BaseInterface from "../BaseInterface";
 
-export interface IPropertyContract {
+export enum PropertyContractStatus {
+  ACTIVE = "ACTIVE",
+  AWAITING_SIGN = "AWAITING_SIGN",
+  EXPIRED = "EXPIRED",
+  CANCELED = "CANCELED",
+  DRAFT = "DRAFT",
+}
+
+export interface IPropertyContract extends BaseInterface {
   _id: string;
-  renter?: IRenter | string;
+  property: IProperty | string;
+  expiresAt: string;
+  renter: IUser | string;
+  document?: string;
   signedAt?: string;
-  active: boolean;
+  status: PropertyContractStatus;
   contract: IContract | string;
+  canceledAt?: string;
+  clicksignEnvelopeId?: string;
 }
