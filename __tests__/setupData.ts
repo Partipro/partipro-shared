@@ -4,6 +4,7 @@ import User from "../src/models/user/user.model";
 import Contract from "../src/models/contract/contract.model";
 import Plan from "../src/models/plan/plan.model";
 import { PlanHsSku } from "../src/models/plan/plan.interface";
+import { Roles } from "../src/models/user/user.interface";
 
 const IDS = {
   USER: new mongoose.Types.ObjectId("5d93751d1c40e30016565236"),
@@ -24,6 +25,7 @@ const data = async () => {
   }).save();
   await new User({
     _id: IDS.USER,
+    role: Roles.ADMIN,
     name: "Jest user",
     email: "user@jest.com",
     contract: IDS.CONTRACT,
